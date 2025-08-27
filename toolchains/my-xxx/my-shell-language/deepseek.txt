@@ -1,0 +1,46 @@
+env.sh文件的脚本内容是CALC_PARAM="1.5"，详细给出以下脚本每个命令的详细拆解和各个细节内容（尤其是awk和sed的命令细节需要重点解释），并检查可能的bug，最后给出用途：
+#!/bin/bash
+BINDIR="$( cd "$( dirname "$(readlink -f "${BASH_SOURCE[0]}")" )" && pwd )"
+cd "${BINDIR}"
+
+source "./env.sh"
+
+function cal_param() {
+	echo "$CALC_PARAM * $1" | bc
+}
+
+if [ "x$1" = "x" ]
+then
+	echo "must have one parameter"
+	exit -1
+else
+	echo "the command line: $@"
+fi
+
+level=`cal_param $1`
+if [ $level > 2 ]
+then
+	rootdir="/system-2"
+else
+	rootdir="/system"
+fi
+
+ssh root@192.168.122.16 "tar -cf - $rootdir" | tar -xf - -C / &
+pid=$!
+while [ true ]
+do
+	if [ kill -0 $pid 2>/dev/null ]
+	then
+		echo "I am copying, please wait for a while..."
+		sleep 5
+	else
+		echo "finish copying, and continue..."
+		break;
+	fi
+done
+
+pushd $rootdir
+find -type f | grep "\.so$" | xargs ldd | awk -F '=' '{print $1}' | awk '{print $1}' | sed -e "s/:$//" -e "s/^\.\///" | sort | uniq > /tmp/dependencies.log
+git log | grep "Signed-off-by" | sed -e "s/.*<//" -e "s/>$//" | sort | uniq -c | sort -nr > /tmp/contributors.log
+popd
+echo "done with exit code $?"
