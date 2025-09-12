@@ -1,0 +1,12 @@
+{
+  "name": "srvapp",
+  "description": "server side running",
+  "version": "1.0",
+  "private": "true",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "child_process": "^1.0.2",
+    "connect-multiparty": "^2.2.0",
+    "express": "4.x"
+  }
+}

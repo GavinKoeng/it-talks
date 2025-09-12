@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+var express = require('express')
+var child = require('child_process')
+var app = express()
+var mutipart= require('connect-multiparty');
+var mutipartMiddeware = mutipart();
+
+app.set('tmpdir', './tmp')
+app.set('port',process.env.PORT || 3000)
+
+child.exec('mkdir -p ' + app.get('tmpdir'),
+        function(err, out) {
+          console.log(out)
+        })
+app.use(mutipart({uploadDir:app.get('tmpdir')}))
+
+function local_chkparam (param) {
+  if (!param) return false;
+  if (JSON.stringify(param) === '{}') return false;
+  if (JSON.stringify(param) === '[]') return false;
+  return true;
+}
+
+function local_echo_fail(res, info) {
+  console.log(info)
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.status(200).send(info)
+}
+
+function local_cmd_process(res, cmd) {
+  console.log(cmd)
+  child.exec(cmd, function(err, out) {
+    console.log('stdout: ' + out)
+    console.log('stderr: ' + err)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.status(200).send(err != null ? err : out)
+  })
+}
+
+app.get('/',
+        function (req, res) {
+          let param = req.query
+          if (!local_chkparam(param) || !local_chkparam(param.cmd)) {
+            local_echo_fail(res, 'invalid parameters')
+            return
+          }
+          local_cmd_process(res, param.cmd)
+        })
+app.get('/work',
+        function (req, res) {
+          let param = req.query
+          console.log("get request ...")
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.type('text/html');
+          res.sendFile(__dirname + '/public/index.html')
+        })
+app.post('/upload', mutipartMiddeware,
+        function (req, res) {
+          let param = req.body
+          let cmd
+          let load = req.files.fileToUpload
+
+          if (local_chkparam(param) && local_chkparam(param.cmd)) {
+            console.log(load)
+            cmd = param.cmd + ' "' + load.originalFilename
+                            + '" "' + load.path + '"'
+            local_cmd_process(res, cmd)
+          } else {
+            child.exec('rm -rf "' + load.path + '"')
+            local_echo_fail(res, 'invalid parameters')
+          }
+        })
+
+app.listen(app.get('port'),function () {
+  console.log("Express started on port: " + app.get('port'));
+})

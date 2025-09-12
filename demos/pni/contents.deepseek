@@ -1,0 +1,83 @@
+说明以下三个文件的整体作用，并详细解释每个文件，给出潜在的bug:
+
+build.sh:
+
+cc -o libpnic.so -I/usr/include/python3.11 -fPIC -shared pni.c -lpthread -lpython3.11
+
+test.py:
+
+#!/bin/python3
+import sys
+import threading
+from ctypes import *
+
+threading.current_thread()
+
+CPNIC_CB = CFUNCTYPE(c_int, c_char_p)
+
+def myFuncC(strparam):
+	try:
+		print("callback string: %s" % strparam.decode("utf-8"))
+		return 0
+	except Exception as e:
+		print(f"Error in callback: {e}")
+		return -1
+
+try:
+	mylibc = cdll.LoadLibrary("./libpnic.so")
+except OSError as e:
+	print(f"Failed to load library: {e}")
+	sys.exit(1)
+
+ret = mylibc.pnic_reflect(CPNIC_CB(myFuncC), b"hello world")
+sys.exit(ret)
+
+pni.c:
+
+#include <Python.h>
+#include <pthread.h>
+
+struct thrparam {
+	int (*cb)(const char *);
+	char *str;
+	int ret;
+};
+
+static void *worker(void *ctx)
+{
+	struct thrparam *param = (struct thrparam *)ctx;
+	PyGILState_STATE gstate = PyGILState_Ensure();
+
+	param->ret = param->cb(param->str);
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+		param->ret = -1;
+	}
+	PyGILState_Release(gstate);
+	return NULL;
+}
+
+int pnic_reflect(int (*cb)(const char *), char *str)
+{
+	int ret;
+	pthread_t thr;
+	struct thrparam *param;
+
+	if (!cb || !str || !*str)
+		return -1;
+
+	param = malloc(sizeof(*param));
+	if (!param)
+		return -1;
+	*param = (struct thrparam){cb, str, 0};
+
+	ret = pthread_create(&thr, NULL, worker, param);
+	if (ret)
+		goto tail;
+	pthread_join(thr, NULL);
+	ret = param->ret;
+
+tail:
+	free(param);
+	return ret;
+}
