@@ -63,8 +63,8 @@ app.post('/upload', mutipartMiddeware,
 
           if (local_chkparam(param) && local_chkparam(param.cmd)) {
             console.log(load)
-            cmd = param.cmd + ' "' + load.originalFilename
-                            + '" "' + load.path + '"'
+            cmd = param.cmd + ' "' + load.path 
+                            + '" "/tmp/' + load.originalFilename + '"'
             local_cmd_process(res, cmd)
           } else {
             child.exec('rm -rf "' + load.path + '"')
