@@ -18,6 +18,9 @@ git config --global credential.helper store
 ```shell
 curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > /usr/local/bin/repo  # If you do not have the permission, download the tool to another directory and configure it as an environment variable by running the chmod a+x /usr/local/bin/repo command.
 pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
+chmod +x /usr/local/bin/repo # 确保repo有可执行权限
+cd /usr/bin/            # 进入到/usr/bin目录去处理python
+ln -s python3 python	# 确保python命令使用的是python3，而不是python2
 ```
 
 ## 安装源码
