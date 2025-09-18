@@ -33,5 +33,15 @@ repo sync -c
 repo forall -c 'git lfs pull'
 ```
 
+拉取大文件过程中出错，可以重置Git LFS
+```shell
+# 重置所有仓库的 LFS 配置
+repo forall -c 'git lfs uninstall'
+repo forall -c 'git lfs install'
+
+# 然后重新拉取
+repo forall -c 'git lfs pull'
+```
+
 ## 参考地址
 https://gitee.com/openharmony/docs/blob/master/en/release-notes/OpenHarmony-v5.0.0-release.md
