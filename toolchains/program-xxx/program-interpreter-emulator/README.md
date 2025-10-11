@@ -1,21 +1,19 @@
-# 程序的解释模拟
+# 程序的环境转换
 
-## 功能视角：
+## 整体概述：
 
-1. 定位：高级语言/异构计算/环境硬件
-2. 产品：Pyton/Java/JS/Shell，AI(Mesa/Cuda/昇腾)，Qemu/Wine
+1. 定位：整体软件硬件运行环境的最复杂的点，支持高级语言运行和虚拟化/云的基础, LLVM/AI/WINE
+2. 产品：Shell/Python/JVM/QemuLinuxUser/LATX/QemuSystem/QemuKVM
 3. 学习：实践(Linux)/理论(科普)/AI(DeepSeek/豆包)
 
-## 使用视角：
+## 解释模拟：
 
-1. 普通：标准(Java/Python/JS/Shell)/JIT/JOT/跨语言调用
-2. 异构：驱动固件/图形(Mesa)/AI(Cuda/昇腾)
-3. 环硬：Qemu/Wine/库模拟(Hudini)
+1. 指令解释：指令转译/前端+中间+后端/AOT+JIT+二者结合/优化/LLVM/AOT依旧需要虚拟机
+2. 环境模拟：线程模拟/内存对应/系统调用(普通+内核FS+内存Map)+信号处理/进线程关系/根FS/QemuSystem
+3. 综合示例：qemu_static示例
 
-## 开发视角：
+## 硬虚拟化：
 
-1. 普通：驱动固件/分发(ELF/OM)/内存映射
-2. 处理：转译(LLVM/Qemu)/跨语言(JNI/PNI)/硬件(CPU/内存/其他设备直接用)
-3. 环境：内存布局/进程启动加载/线程对应关系/内核态交互(系统调用/信号处理/内核文件系统)
-
-## 综合示例：qemu_static示例
+1. 初步介绍：同硬件架构，高性能，QemuKVM/VMWare/VirtualBox/ZArch, CPU/内存/显卡/网卡，基本原理
+2. 硬件原理：参见PPT图进行详细说明
+3. 软件原理：参见PPT图进行详细说明
