@@ -31,7 +31,7 @@ public class NativeExample {
         example.callback = example::handleEvent;
         try {
             example.startBackgroundThread(example.callback, 5);
-            Thread.sleep(30000);
+            Thread.sleep(2000000);
             example.stopBackgroundThread();
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());

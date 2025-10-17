@@ -8,6 +8,7 @@ threading.current_thread()
 CPNIC_CB = CFUNCTYPE(c_int, c_char_p)
 
 def myFuncC(strparam):
+	import pdb; pdb.set_trace()
 	try:
 		print("callback string: %s" % strparam.decode("utf-8"))
 		return 0

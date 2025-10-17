@@ -11,10 +11,9 @@ static jmethodID callback_method = NULL;
 static pthread_t background_thread = 0;
 static volatile int thread_running = 0;
 
-static void* background_worker(void* arg)
+static void main_worker(int count)
 {
 	int i = 0;
-	int count = (int)(long)arg;
 	int attached = 0;
 	JNIEnv *env;
 	char message[256];
@@ -24,7 +23,7 @@ static void* background_worker(void* arg)
 		result = (*jvm)->AttachCurrentThread(jvm, (void**)&env, NULL);
 		if (result != JNI_OK) {
 			fprintf(stderr, "Failed to attach thread to JVM");
-			return NULL;
+			return;
 		}
 		attached = 1;
 	}
@@ -40,6 +39,11 @@ static void* background_worker(void* arg)
 	
 	if (attached)
 		(*jvm)->DetachCurrentThread(jvm);
+}
+
+static void* background_worker(void* arg)
+{
+	main_worker((int)(long)arg);
 	return NULL;
 }
 
