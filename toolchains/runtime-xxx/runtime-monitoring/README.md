@@ -1,19 +1,19 @@
 # 运行时监控：
 
 ## 功能视角：
-1. 定位：
-2. 产品：
-3. 学习：
+1. 定位：搜集运行时的各类环境信息(不局限于计算机)，为后继分析提供支撑；运行时调试和运行时分析单独说明
+2. 类别：桌面(Linux/Windows/Mac)，手机(安卓/苹果)，服务器(Linux/Unix)，扩展/专用平台(虚拟机/云/嵌入式)
+3. 学习：实践Linux(开源/范围广/复杂度低)/理论科普(全面/成体系/开拓视野)/辅助AI(deepseek/豆包)
 
 ## 使用视角：
-1. 普通用户：
-2. 超级用户：
-3. 开发人员：
+1. 普通使用：环境(设备/配置/资源)/存储(文件系统/硬盘/内存)/网络(本机/拓扑/外部)/处理(CPU/进线程/扩展平台)
+2. 系统管理：权限高(安全)/全面(journalctl/procfs/varlog/home)/细致(nethogs/tcpdump/tshark/iotop/slabtop)
+3. 开发调试：普通用户+系统管理的互补，精细跟踪分析(strace/perf/BPFtrace/调试器/heaptrack/valgrind/虚拟机)
 
-## 开发视角：
-1. 基本原理：
-2. 命令插件：
-3. 图形集成：
+## 实现视角：
+1. 基本原理：基于平台实现本身，提供相关的服务；内核，各类虚拟机，网络基础设施服务
+2. 交互集成：命令行界面，图形界面，编程接口
+3. 专用定制：扩展工具(交互集成)，针对自己程序(日志/统计/断点)，全新开发(基本原理)
 
 ## 综合示例：
 1. 处理：
@@ -21,12 +21,18 @@
 	strace, perf top
 	xinput test id, xwininfo -root -tree, intel_gpu_top/nvtop/radeontop, docker(exec/cp), adb，
 2. 存储：
-	top, iotstat, iotop, lsof, 
+	top, iostat, iotop, lsof, 
 	df, du, find,
 	vmstat, free, /proc/meminfo, slabtop, heaptrack(-gui), 
 	lsblk, lsusb
 3. 网络： 
 	ping, nethogs, ss/netstat, tcpdump, tshark, mtr, nmap, curl -4 icanhazip.com, curl -6 icanhazip.com
+
+4. 环境：
+	设备：lsusb/lsblk/ttyserial/ifconfig/route/ip/(iptables -L -v/ufw/firewalld/nftables)
+	配置：sysctl -a/gsettings
+	资源：ipcs/lsfd/lslocks/lsof(-i)，perf lock record -a/perf lock report/interrupts/zoneinfo/dma(vmstat/bufinfo/slabtop/lsof),
+
 flatpak也可进入shell。
 专用系统命令，k8s，数据库
 docker exec/cp
