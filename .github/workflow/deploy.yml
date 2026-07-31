@@ -42,7 +42,7 @@ jobs:
       - name: 上传构建产物（供部署任务使用）
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/.vuepress/dist  # VuePress 默认构建输出目录
+          path: .vuepress/dist  # VuePress 默认构建输出目录
 
   # ========== 部署任务 ==========
   deploy:
