@@ -156,24 +156,24 @@ export default defineUserConfig({
                                 'navigation/learning/learning_hacking/README.md',
                             ]
                         },
-                        {
-                            text: '理解与认知',
-                            link: 'navigation/understanding/',
-                            children: [
-                                'navigation/understanding/understanding_os/README.md',
-                                'navigation/understanding/understanding_engineering/README.md',
-                                'navigation/understanding/understanding_fullstack/README.md',
-                            ]
-                        },
-                        {
-                            text: '聚焦与方向',
-                            link: 'navigation/focusing/',
-                            children: [
-                                'navigation/focusing/focusing_itedu/README.md',
-                                'navigation/focusing/focusing_itfuture/README.md',
-                                'navigation/focusing/focusing_itvalue/README.md',
-                            ]
-                        },
+//                        {
+//                            text: '理解与认知',
+//                            link: 'navigation/understanding/',
+//                            children: [
+//                                'navigation/understanding/understanding_os/README.md',
+//                                'navigation/understanding/understanding_engineering/README.md',
+//                                'navigation/understanding/understanding_fullstack/README.md',
+//                            ]
+//                        },
+//                        {
+//                            text: '聚焦与方向',
+//                            link: 'navigation/focusing/',
+//                            children: [
+//                                'navigation/focusing/focusing_itedu/README.md',
+//                                'navigation/focusing/focusing_itfuture/README.md',
+//                                'navigation/focusing/focusing_itvalue/README.md',
+//                            ]
+//                        },
                     ]
                 }
             ],
