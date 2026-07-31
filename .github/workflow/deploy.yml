@@ -37,7 +37,7 @@ jobs:
       - name: 安装依赖并构建
         run: |
           npm ci          # 使用 package-lock.json 安装，比 npm install 更快更稳定
-          npm run docs:build  # 构建 VuePress 网站
+          npm run build  # 构建 VuePress 网站
 
       - name: 上传构建产物（供部署任务使用）
         uses: actions/upload-pages-artifact@v3

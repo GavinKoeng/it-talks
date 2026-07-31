@@ -6,8 +6,7 @@
   "license": "MIT",
   "scripts": {
       "dev": "vuepress dev .",
-      "build": "vuepress build .",
-      "docs:build": "vuepress build ."
+      "build": "vuepress build ."
   },
   "devDependencies": {
     "katex": "^0.16.11",
