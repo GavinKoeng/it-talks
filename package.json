@@ -5,8 +5,9 @@
   "author": "isno",
   "license": "MIT",
   "scripts": {
-    "dev": "vuepress dev .",
-    "build": "vuepress build ."
+      "dev": "vuepress dev .",
+      "build": "vuepress build .",
+      "docs:build": "vuepress build ."
   },
   "devDependencies": {
     "katex": "^0.16.11",
