@@ -71,8 +71,21 @@ export default defineUserConfig({
 
         // ---------- 侧边栏 ----------
         sidebar: {
-            // 首页不显示侧边栏，或者显示特定内容
-
+            // ===== 新增：根路径（首页）的侧边栏 =====
+            '/': [
+                {
+                    text: '📖 导航',
+                    children: [
+                        { text: '首页', link: '/' },
+                        { text: 'AI 专题', link: '/common/ai/' },
+                        { text: '物理与 IT', link: '/common/maphyit/' },
+                        { text: 'IT 体系地图', link: '/map/' },
+                        { text: '编程学习', link: '/navigation/learning/' },
+                        { text: '关于', link: '/about.md' },
+                    ]
+                }
+            ],
+            
             // ===== common/ai/ 目录下的侧边栏 =====
             '/common/ai/': [
                 {
@@ -80,8 +93,6 @@ export default defineUserConfig({
                     collapsable: false,
                     children: [
                         // 如果 ai 目录下有 md 文件，在这里列出
-                        // 例如：'ainormal',
-                        // 如果没有 md 文件，可以留空或显示提示
                     ]
                 }
             ],
@@ -93,7 +104,6 @@ export default defineUserConfig({
                     collapsable: false,
                     children: [
                         // 列出 maphyit 目录下的 md 文件
-                        // 例如：'maphyit',
                     ]
                 }
             ],
