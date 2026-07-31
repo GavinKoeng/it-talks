@@ -1,6 +1,7 @@
-# test
+---
+sidebar: true
+---
 
+# 测试页面
 
-test
-test
-test
+这是测试页面的内容。
