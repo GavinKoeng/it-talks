@@ -4,7 +4,6 @@ name: 部署到 GitHub Pages
 on:
   push:
     branches:
-      - main  # 当推送到 main 分支时触发部署
       - hotfix  # 当推送到 main 分支时触发部署
 
   # 允许从 GitHub Actions 标签页手动触发部署
