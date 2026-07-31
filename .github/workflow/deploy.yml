@@ -1,0 +1,57 @@
+# .github/workflows/deploy.yml
+name: 部署到 GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发部署
+
+  # 允许从 GitHub Actions 标签页手动触发部署
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限，允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许同时运行一个部署任务，防止冲突
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ========== 构建任务 ==========
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm  # 缓存依赖，加快构建速度
+
+      - name: 安装依赖并构建
+        run: |
+          npm ci          # 使用 package-lock.json 安装，比 npm install 更快更稳定
+          npm run docs:build  # 构建 VuePress 网站
+
+      - name: 上传构建产物（供部署任务使用）
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vuepress/dist  # VuePress 默认构建输出目录
+
+  # ========== 部署任务 ==========
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build          # 依赖构建任务成功完成
+    runs-on: ubuntu-latest
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
