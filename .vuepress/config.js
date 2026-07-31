@@ -1,7 +1,8 @@
 import { defaultTheme, defineUserConfig } from 'vuepress'
 
 export default defineUserConfig({
-    base: '/',
+    sourceDir: './',
+    base: '/it-talks/',
     lang: 'zh-CN',
     title: '测试站点',
     theme: defaultTheme({
