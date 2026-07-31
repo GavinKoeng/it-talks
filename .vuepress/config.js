@@ -76,107 +76,15 @@ export default defineUserConfig({
 
         // ---------- 侧边栏 ----------
         sidebar: {
-            // 首页的侧边栏
             '/': [
                 {
-                    text: '📖 导航',
+                    text: '测试导航',
                     children: [
                         { text: '首页', link: '/' },
                         { text: 'AI 专题', link: 'common/ai/' },
-                        { text: '物理与 IT', link: 'common/maphyit/' },
-                        { text: 'IT 体系地图', link: 'map/' },
-                        { text: '编程学习', link: 'navigation/learning/' },
-                        { text: '关于', link: 'about.md' },
                     ]
                 }
-            ],
-            
-            // common/ai/ 目录的侧边栏
-            'common/ai/': [
-                {
-                    text: 'AI 专题',
-                    children: [
-                        // 在这里列出 common/ai/ 下的 .md 文件
-                        // 例如：'README.md', 'ainormal.md'
-                    ]
-                }
-            ],
-
-            // common/maphyit/ 目录的侧边栏
-            'common/maphyit/': [
-                {
-                    text: '物理与 IT 类比',
-                    children: [
-                        // 在这里列出 common/maphyit/ 下的 .md 文件
-                    ]
-                }
-            ],
-
-            // map/ 目录的侧边栏
-            'map/': [
-                {
-                    text: 'IT 体系地图',
-                    children: [
-                        {
-                            text: '计算机体系',
-                            link: 'map/computers/',
-                            children: [
-                                'map/computers/README.md',
-                            ]
-                        },
-                        {
-                            text: '程序员视角',
-                            link: 'map/programmers/',
-                            children: [
-                                'map/programmers/README.md',
-                            ]
-                        },
-                        {
-                            text: '工具链',
-                            link: 'map/toolchains/',
-                            children: [
-                                'map/toolchains/README.md',
-                            ]
-                        },
-                    ]
-                }
-            ],
-
-            // navigation/ 目录的侧边栏
-            'navigation/': [
-                {
-                    text: '学习导航',
-                    children: [
-                        {
-                            text: '编程学习',
-                            link: 'navigation/learning/',
-                            children: [
-                                'navigation/learning/learning_programming/README.md',
-                                'navigation/learning/learning_architecture/README.md',
-                                'navigation/learning/learning_hacking/README.md',
-                            ]
-                        },
-//                        {
-//                            text: '理解与认知',
-//                            link: 'navigation/understanding/',
-//                            children: [
-//                                'navigation/understanding/understanding_os/README.md',
-//                                'navigation/understanding/understanding_engineering/README.md',
-//                                'navigation/understanding/understanding_fullstack/README.md',
-//                            ]
-//                        },
-//                        {
-//                            text: '聚焦与方向',
-//                            link: 'navigation/focusing/',
-//                            children: [
-//                                'navigation/focusing/focusing_itedu/README.md',
-//                                'navigation/focusing/focusing_itfuture/README.md',
-//                                'navigation/focusing/focusing_itvalue/README.md',
-//                            ]
-//                        },
-                    ]
-                }
-            ],
+            ]
         },
 
         // ---------- 其他功能 ----------
