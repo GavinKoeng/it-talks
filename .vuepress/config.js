@@ -1,33 +1,67 @@
 import { defineUserConfig, defaultTheme } from 'vuepress';
 import { mdEnhancePlugin } from "vuepress-plugin-md-enhance";
-import { readingTimePlugin } from "vuepress-plugin-reading-time2";
+// 如果你不需要评论和阅读时间，可以注释或删除以下导入
+// import { commentPlugin } from "vuepress-plugin-comment2";
+// import { readingTimePlugin } from "vuepress-plugin-reading-time2";
 import { containerPlugin } from '@vuepress/plugin-container'
 
 export default defineUserConfig({
-    // ===== 关键：指定源目录为项目根目录 =====
+    // ===== 关键：告诉 VuePress 从项目根目录读取内容 =====
     sourceDir: './',
-
-    // base 路径改为你的仓库名
+    
+    // ===== 部署路径（你的 GitHub Pages 子路径） =====
     base: '/it-talks/',
 
+    // ===== 站点信息 =====
     lang: 'zh-CN',
     title: '程序员的学习杂谈',
     description: 'AI · 物理 · IT · 系统思考',
 
+    // ===== 页面头部（图标等） =====
     head: [
         ['link', { rel: "shortcut icon", href: "/icon.png" }],
+        // 如果你不需要百度统计，这段可以删除
+        /*
+        [ 'script', {}, `
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?你的ID";
+                var s = document.getElementsByTagName("script")[0]; 
+                s.parentNode.insertBefore(hm, s);
+            })();
+        `]
+        */
     ],
 
+    // ===== 插件配置 =====
     plugins: [
+        // Markdown 增强：脚注、数学公式、下标等
         mdEnhancePlugin({
             footnote: true,
+            katex: true,   // 如果你不需要数学公式，可以改为 false
             sub: true,
         }),
+        // 自定义容器：::: center / ::: right
         containerPlugin({ type: 'center' }),
         containerPlugin({ type: 'right' }),
-        readingTimePlugin({}),
+        
+        // 阅读时间统计（需要先安装插件）
+        // readingTimePlugin({}),
+        
+        // 评论系统（需要先安装插件并配置你的仓库信息）
+        /*
+        commentPlugin({
+            provider: "Giscus",
+            repo: "GavinKoeng/it-talks",
+            repoId: "你的仓库ID",
+            category: "General",
+            categoryId: "你的分类ID"
+        }),
+        */
     ],
 
+    // ===== 主题配置 =====
     theme: defaultTheme({
         // ---------- 导航栏 ----------
         navbar: [
@@ -42,7 +76,7 @@ export default defineUserConfig({
 
         // ---------- 侧边栏 ----------
         sidebar: {
-            // ===== 根路径（首页）的侧边栏 =====
+            // 首页的侧边栏
             '/': [
                 {
                     text: '📖 导航',
@@ -56,36 +90,32 @@ export default defineUserConfig({
                     ]
                 }
             ],
-
-            // ===== common/ai/ 目录下的侧边栏 =====
+            
+            // common/ai/ 目录的侧边栏
             'common/ai/': [
                 {
                     text: 'AI 专题',
-                    collapsable: false,
                     children: [
                         // 在这里列出 common/ai/ 下的 .md 文件
-                        // 例如：'ainormal',
+                        // 例如：'README.md', 'ainormal.md'
                     ]
                 }
             ],
 
-            // ===== common/maphyit/ 目录下的侧边栏 =====
+            // common/maphyit/ 目录的侧边栏
             'common/maphyit/': [
                 {
                     text: '物理与 IT 类比',
-                    collapsable: false,
                     children: [
                         // 在这里列出 common/maphyit/ 下的 .md 文件
-                        // 例如：'maphyit',
                     ]
                 }
             ],
 
-            // ===== map/ 目录下的侧边栏 =====
+            // map/ 目录的侧边栏
             'map/': [
                 {
                     text: 'IT 体系地图',
-                    collapsable: false,
                     children: [
                         {
                             text: '计算机体系',
@@ -112,11 +142,10 @@ export default defineUserConfig({
                 }
             ],
 
-            // ===== navigation/ 目录下的侧边栏 =====
+            // navigation/ 目录的侧边栏
             'navigation/': [
                 {
                     text: '学习导航',
-                    collapsable: false,
                     children: [
                         {
                             text: '编程学习',
@@ -150,13 +179,13 @@ export default defineUserConfig({
             ],
         },
 
-        // ---------- 其他主题配置 ----------
+        // ---------- 其他功能 ----------
         lastUpdated: true,
         editLinks: true,
         editLinkText: '在 GitHub 上编辑此页',
         editLinkPattern: 'https://github.com/GavinKoeng/it-talks/edit/main/{path}',
         docsRepo: 'https://github.com/GavinKoeng/it-talks',
-        docsDir: '',  // 因为文件在根目录，设为空字符串
+        docsDir: '',      // 因为内容在根目录，设为空
         docsBranch: 'main',
     })
 });
